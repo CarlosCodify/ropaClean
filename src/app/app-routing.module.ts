@@ -9,11 +9,11 @@ const routes: Routes = [
     canActivate: [ isNotAuthenticatedGuard ],
     loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule ),
   },
-  // {
-  //   path: 'dashboard',
-  //   canActivate: [ isAuthenticatedGuard ],
-  //   loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardModule ),
-  // },
+  {
+    path: 'dashboard',
+    canActivate: [ isAuthenticatedGuard ],
+    loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardModule ),
+  },
   {
     path: '**',
     redirectTo: 'auth'

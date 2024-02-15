@@ -25,15 +25,18 @@ export class RegisterPageComponent {
   private router = inject( Router );
 
   public myFormRegister: FormGroup = this.fb.group({
+    first_name: ['', [ Validators.required ]],
+    last_name: ['', [ Validators.required ]],
+    phone: ['', [ Validators.required, Validators.maxLength(8) ]],
     email: ['', [ Validators.required, Validators.email ]],
     password: ['', [ Validators.required, Validators.minLength(6) ]],
     passwordConfirmation: ['', [ Validators.required, Validators.minLength(6) ]],
   },{ validators: passwordsMatchValidator } );
 
   register() {
-    const { email, password, passwordConfirmation} = this.myFormRegister.value;
+    const { first_name, last_name, phone, email, password, passwordConfirmation } = this.myFormRegister.value;
 
-    this.authService.registerUser( email, password, passwordConfirmation)
+    this.authService.registerUser( first_name, last_name, phone, email, password, passwordConfirmation)
       .subscribe( {
         next: () => this.router.navigateByUrl('/dashboard'),
         error: ( message ) => {

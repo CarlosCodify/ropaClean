@@ -32,7 +32,6 @@ export class AuthService {
     this._currentUser.set( user );
     this._authStatus.set( AuthStatus.authenticated );
     localStorage.setItem('token', token!)
-    console.log('Se logro crear');
     return true;
   }
 
@@ -50,11 +49,12 @@ export class AuthService {
       );
   }
 
-  registerUser( email:EmailValidator, password:string, password_confirmation:string):Observable<boolean> {
-    const url = `${this.baseUrl}/auth`
-    const body = { email, password, password_confirmation}
+  registerUser( first_name:string, last_name:string, phone:string, email:EmailValidator, password:string, password_confirmation:string):Observable<boolean> {
+    const url = `${this.baseUrl}/api/v1/users/register`
+    const user_body = { email, password, password_confirmation}
+    const person_body = { first_name, last_name, phone, email}
 
-    return this.http.post<RegisterUser>(url, body, { observe: 'response' })
+    return this.http.post<RegisterUser>(url, {user: user_body, person: person_body}, { observe: 'response' })
       .pipe(
         map( (response) => this.setAuthentication(response)),
         catchError( err => {
