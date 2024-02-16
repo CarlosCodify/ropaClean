@@ -1,1 +1,104 @@
-<p>drivers works!</p>
+<div class="col-12">
+  <div class="card">
+      <div class="card-body">
+          <h4 class="card-title">Lista de Conductores</h4>
+          <li class="box-label"><a href="javascript:void(0)" data-toggle="modal" data-target="#myModal" class="btn btn-info text-white">+ Registrar un nuevo conductor</a></li>
+          <div id="myModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel">Agregar motocicleta</h4>
+                      </div>
+                      <div class="modal-body">
+                          <form class="form-horizontal" [formGroup]="myForm">
+                              <div class="form-group">
+                                <label class="col-md-12">Nombre</label>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" placeholder="Nombre" formControlName="first_name"></div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-md-12">Apellido</label>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" placeholder="Apellido" formControlName="last_name"></div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-md-12">Telefono</label>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" placeholder="Telefono" formControlName="phone"></div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-md-12">Licencia de conducir</label>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" placeholder="Licencia de conducir" formControlName="driver_license"></div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-md-12">Cedula de identidad</label>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" placeholder="Cedula de identidad" formControlName="identity_card"></div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-md-12">Correo</label>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" placeholder="Correo" formControlName="email"></div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-md-12">Contraseña</label>
+                                <div class="col-md-12">
+                                    <input type="password" class="form-control" placeholder="Contraseña" formControlName="password"></div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-md-12">Confirmar Contraseña</label>
+                                <div class="col-md-12">
+                                    <input type="password" class="form-control" placeholder="Confirmar Contraseña" formControlName="password_confirmation"></div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-md-12">Selecciona la motocicleta</label>
+                                <div class="col-md-12">
+                                    <select class="form-control" formControlName="motorcycle_id">
+                                      <option value="" disabled selected>Selecciona la motocicleta</option>
+                                      @for (motorcycle of motorcycles; track $index) {
+                                        <option [value]="motorcycle.id">{{ motorcycle.license_plate }}, {{ motorcycle.model.name}}, {{ motorcycle.model.brand.name }}</option>
+                                      }
+                                    </select>
+                                </div>
+                            </div>
+                          </form>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-info waves-effect" data-dismiss="modal" (click)="create()">Crear</button>
+                          <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancelar</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="table-responsive">
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th>Nombre y Apellido</th>
+                          <th>Correo</th>
+                          <th>Telefono</th>
+                          <th>Cedula de identidad</th>
+                          <th>Licencia de conducir</th>
+                          <th>Estado</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    @for (driver of drivers; track $index) {
+                      <tr>
+                          <td>{{ driver.first_name + ' ' + driver.last_name }}</td>
+                          <td>{{ driver.email }}</td>
+                          <td>{{ driver.phone }}</td>
+                          <td>{{ driver.identity_card }}</td>
+                          <td>{{ driver.driver_license }}</td>
+                          <td>
+                              <div class="label label-table {{ driver.status ? 'label-success' : 'label-danger'  }}">{{ driver.status ? 'Libre' : 'Ocupado' }}</div>
+                          </td>
+                      </tr>
+                    }
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MotorcyclesComponent } from './motorcycles/motorcycles.component';
 import { OrderListsComponent } from './order-lists/order-lists.component';
 import { DriversComponent } from './drivers/drivers.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -13,7 +14,8 @@ import { DriversComponent } from './drivers/drivers.component';
     DriversComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   exports: [
     MotorcyclesComponent,

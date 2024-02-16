@@ -64,7 +64,7 @@ export class SidebarComponent implements OnInit {
             routerLink: 'home'
           },
           {
-            label: 'Ordenes',
+            label: 'Ordenes en curso',
             icon: 'fa fa-list',
             routerLink: 'admin/orders'
           },

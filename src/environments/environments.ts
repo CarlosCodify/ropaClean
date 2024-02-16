@@ -1,5 +1,5 @@
 
 export const environment = {
-  mapboxKey: "pk.eyJ1IjoiY2FybG9zaG9kemljIiwiYSI6ImNsbGZvMjRsMzB1a3EzZnBqNjBkemIyMHkifQ.C6DnXAIn3iN_J_Hg4H_KRw",
+  apiKey: 'pk.eyJ1IjoiY2FybG9zaG9kemljIiwiYSI6ImNsbGZucnJ5azBzOG4zZGw2a3FjYjBpd3IifQ.MAJJoNIelfLsDRJ_GlLBzQ',
   baseUrl: "http://localhost:3000"
 };

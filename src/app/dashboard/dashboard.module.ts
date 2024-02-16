@@ -8,7 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CustomerModule } from '../customer/customer.module';
 import { AdminModule } from '../admin/admin.module';
 import { DriverModule } from '../driver/driver.module';
-
+import * as mapboxgl from 'mapbox-gl';
 
 @NgModule({
   declarations: [

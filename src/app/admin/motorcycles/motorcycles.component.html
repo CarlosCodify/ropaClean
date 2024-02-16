@@ -1,1 +1,94 @@
-<p>motorcycles works!</p>
+<div class="col-12">
+  <div class="card">
+      <div class="card-body">
+          <h4 class="card-title">Lista de motos </h4>
+          <li class="box-label"><a href="javascript:void(0)" data-toggle="modal" data-target="#myModal" class="btn btn-info text-white">+ Registrar nueva moto</a></li>
+          <div id="myModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel">Agregar motocicleta</h4>
+                      </div>
+                      <div class="modal-body">
+                          <form class="form-horizontal" [formGroup]="myForm">
+                              <div class="form-group">
+                                  <label class="col-md-12">Selecciona la marca</label>
+                                  <div class="col-md-12">
+                                      <select class="form-control" formControlName="selectedBrandId" (change)="findModels(myForm.get('selectedBrandId')!.value)">
+                                        <option value="" disabled selected>Selecciona la marca</option>
+                                        @for (brand of brands; track $index) {
+                                          <option [value]="brand.id">{{ brand.name }}</option>
+                                        }
+                                      </select>
+                                  </div>
+                              </div>
+                              @if (models.length > 0) {
+                                <div class="form-group">
+                                    <label class="col-md-12">Selecciona el modelo</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control" formControlName="model_id">
+                                          <option value="" disabled selected>Selecciona el modelo</option>
+                                          @for (model of models; track $index) {
+                                            <option [value]="model.id">{{ model.name + model.year }}</option>
+                                          }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="col-md-12">Número de Placa</label>
+                                  <div class="col-md-12">
+                                      <input type="text" class="form-control" placeholder="Placa" formControlName="license_plate"></div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="col-md-12">Estado</label>
+                                  <div class="col-md-12">
+                                      <select class="form-control" formControlName="status">
+                                        <option value="" disabled selected>Selecciona el estado</option>
+                                        <option value="true">Activa</option>
+                                        <option value="false">Inactiva</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              }
+                          </form>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-info waves-effect" data-dismiss="modal" (click)="create()">Crear</button>
+                          <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancelar</button>
+                      </div>
+                  </div>
+                  <!-- /.modal-content -->
+              </div>
+              <!-- /.modal-dialog -->
+          </div>
+          <div class="table-responsive">
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th>Placa</th>
+                          <th>Modelo</th>
+                          <th>Año</th>
+                          <th>Marca</th>
+                          <th>Estado</th>
+                          <th>Conductor Asignado</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    @for (motorcycle of motorcycles; track $index) {
+                      <tr>
+                          <td>{{ motorcycle.license_plate }}</td>
+                          <td>{{ motorcycle.model.name }}</td>
+                          <td><span class="text-muted"><i class="fa fa-clock-o"></i> {{ motorcycle.model.year }}</span> </td>
+                          <td>{{ motorcycle.model.brand.name }}</td>
+                          <td>
+                              <div class="label label-table {{ motorcycle.status ? 'label-success' : 'label-danger'  }}">{{ motorcycle.status ? 'Activo' : 'Inactivo' }}</div>
+                          </td>
+                          <td>{{ motorcycle.driver ? motorcycle.driver!.person!.first_name : 'N/A' }}</td>
+                      </tr>
+                    }
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
