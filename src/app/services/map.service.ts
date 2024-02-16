@@ -1,13 +1,16 @@
 import { Injectable, inject } from '@angular/core';
-import { AnySourceData, LngLatBounds, LngLatLike, Map, Marker, Popup } from 'mapbox-gl';
-import { Feature } from '../interfaces/places_interface';
-import { Route } from '../interfaces/directions_interface';
+import { AnySourceData, LngLatBounds, Map, Marker, Popup } from 'mapbox-gl';
+import { DirectionsResponse, Route } from '../interfaces/directions_interface';
 import { Driver } from '../admin/drivers/interfaces/driver.interface';
+import { Order } from '../interfaces/order_interface';
+import { DirectionsApiClient } from '../api/directionsApiClient';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapService {
+
+  private directionsApi = inject(DirectionsApiClient);
 
   private map?: Map;
 
@@ -21,49 +24,55 @@ export class MapService {
     this.map = map;
   }
 
-  flyTo( coords: LngLatLike) {
-    if ( !this.isMapReady) throw Error('El mapa no esta inicializado');
-
-    this.map?.flyTo({
-      zoom: 14,
-      center: coords
-    })
-  }
-
-  createMarkersFromPlaces( places: Feature[], userLocation: [number, number] ){
+  createMarkersFromOrder( order: Order ){
     if ( !this.map ) return;
 
     this.markers.forEach( marker => marker.remove() );
     const newMarkers = [];
 
-    for( const place of places ) {
-      const [ lng, lat ] = place.center;
-      const popup = new Popup()
-        .setHTML(`
-            <h6>${ place.text }</h6>
-            <span>${ place.place_name }</span>
-          `);
-      const newMarker = new Marker()
-        .setLngLat([lng, lat])
-        .setPopup(popup)
-        .addTo(this.map);
+    const pickup_latitude = Number(order.pickup_address.latitude);
+    const pickup_longitude = Number(order.pickup_address.longitude);
+    const popup_pickup = new Popup()
+      .setHTML(`
+          <h6>Lugar de recojo</h6>
+          <span>${ order.pickup_address.address }</span>
+        `);
+    const newMarkerPickup = new Marker({color: 'red'})
+      .setLngLat([pickup_longitude, pickup_latitude])
+      .setPopup(popup_pickup)
+      .addTo(this.map);
 
-      newMarkers.push( newMarker );
-    }
+    newMarkers.push( newMarkerPickup );
+
+    const driver_latitude = Number(order.driver.latitude);
+    const driver_longitude = Number(order.driver.longitude);
+    const popupDriver = new Popup()
+      .setHTML(`
+          <h6>Conductor</h6>
+          <span>${ order.driver.person.first_name + ' ' + order.driver.person.last_name }</span>
+        `);
+    const newMarkerDriver = new Marker({color: 'blue'})
+      .setLngLat([driver_longitude, driver_latitude])
+      .setPopup(popupDriver)
+      .addTo(this.map);
+
+    newMarkers.push( newMarkerDriver );
+
+    const delivery_latitude = Number(order.delivery_address.latitude);
+    const delivery_longitude = Number(order.delivery_address.longitude);
+    const popupDelivery = new Popup()
+      .setHTML(`
+          <h6>Lugar de entrega</h6>
+          <span>${ order.delivery_address.address }</span>
+        `);
+    const newMarkerDelivery = new Marker({color: 'green'})
+      .setLngLat([delivery_longitude, delivery_latitude])
+      .setPopup(popupDelivery)
+      .addTo(this.map);
+
+    newMarkers.push( newMarkerDelivery );
 
     this.markers = newMarkers;
-
-    if ( places.length === 0) return;
-
-    // Límites del mapa
-    const bounds = new LngLatBounds();
-
-    newMarkers.forEach( marker => bounds.extend(marker.getLngLat()) );
-    bounds.extend(userLocation);
-
-    this.map.fitBounds(bounds, {
-      padding: 200
-    })
   }
 
   createMarkersFromDrivers( drivers: Driver[]){
@@ -87,29 +96,18 @@ export class MapService {
       newMarkers.push( newMarker );
     }
     this.markers = newMarkers;
-
-    const bounds = new LngLatBounds();
-
-    newMarkers.forEach( marker => bounds.extend(marker.getLngLat()) );
-
-    bounds.extend([-63.201041152478226, -17.76748594084425]);
-
-    this.map.fitBounds(bounds, {
-      padding: 200
-    })
   }
 
-  drawPolyline( route: Route){
+  getRouteBetweenPoints( start: [number, number], end: [number, number] ) {
+    this.directionsApi.get<DirectionsResponse>(`/${ start.join(',') };${ end.join(',') }`)
+      .subscribe( resp => {
+        this.drawPolyline(resp.routes[0])
+      } )
+  }
+
+  private drawPolyline( route: Route){
+    console.log(route)
     const coords = route.geometry.coordinates;
-
-    const bounds = new LngLatBounds();
-    coords.forEach( ([ lng, lat ]) => {
-      bounds.extend([lng, lat]);
-    });
-
-    this.map?.fitBounds( bounds, {
-      padding: 200
-    });
 
     // Polyline
     const sourceData: AnySourceData = {

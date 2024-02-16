@@ -1,1 +1,45 @@
-<p>order-lists works!</p>
+<div class="col-12">
+  <div class="card">
+      <div class="card-body">
+          <h4 class="card-title">Lista de ordenes</h4>
+          <div class="table-responsive">
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th>Orden</th>
+                          <th>Cliente</th>
+                          <th>Fecha de creación</th>
+                          <th>Monto</th>
+                          <th>Estado</th>
+                          <th>Conductor Asignado</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    @for (order of orders; track $index) {
+                      <tr>
+                          <td><a (click)="orderView(order.id)">Orden #{{ order.id }}</a></td>
+                          <td>{{ order.customer.person.first_name }}</td>
+                          <td><span class="text-muted"><i class="fa fa-clock-o"></i> {{ order.created_at | date: 'MMM dd, yyyy'  }}</span> </td>
+                          <td>{{ order.total_amount | currency  }}</td>
+                          <td>
+                              @switch (order.order_status.name) {
+                                @case ('En borrador') {
+                                  <div class="label label-table label-info">En borrador</div>
+                                }
+                                @case ('Pendiente') {
+                                  <div class="label label-table label-warning">En proceso</div>
+                                }
+                                @default {
+                                  <div class="label label-table label-success">Terminado</div>
+                                }
+                              }
+                          </td>
+                          <td>{{ order.driver.person.first_name + ' ' + order.driver.person.last_name}}</td>
+                      </tr>
+                    }
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>

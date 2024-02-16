@@ -4,6 +4,7 @@ import { MotorcyclesComponent } from './motorcycles/motorcycles.component';
 import { OrderListsComponent } from './order-lists/order-lists.component';
 import { DriversComponent } from './drivers/drivers.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
     MotorcyclesComponent,

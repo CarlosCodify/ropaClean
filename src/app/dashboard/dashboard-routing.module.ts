@@ -9,6 +9,7 @@ import { NewOrdersComponent } from '../driver/new-orders/new-orders.component';
 import { DriversComponent } from '../admin/drivers/drivers.component';
 import { MotorcyclesComponent } from '../admin/motorcycles/motorcycles.component';
 import { OrderListsComponent } from '../admin/order-lists/order-lists.component';
+import { OrderViewComponent } from '../components/order-view/order-view.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
     component: DashboardLayoutComponent,
     children: [
       { path: 'home', component: HomePageComponent },
+      { path: 'order/:id', component: OrderViewComponent },
       // Customer
       { path: 'customers/orders', component: OrdersComponent },
       { path: 'customers/order/new', component: OrderNewComponent },

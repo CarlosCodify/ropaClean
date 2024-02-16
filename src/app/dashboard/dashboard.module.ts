@@ -9,6 +9,7 @@ import { CustomerModule } from '../customer/customer.module';
 import { AdminModule } from '../admin/admin.module';
 import { DriverModule } from '../driver/driver.module';
 import * as mapboxgl from 'mapbox-gl';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import * as mapboxgl from 'mapbox-gl';
     SharedModule,
     CustomerModule,
     AdminModule,
-    DriverModule
+    DriverModule,
+    ComponentsModule
   ]
 })
 export class DashboardModule { }
