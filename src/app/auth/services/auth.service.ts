@@ -5,6 +5,7 @@ import { AuthResponse, AuthStatus, CheckTokenResponse, User } from '../interface
 import { EmailValidator } from '@angular/forms';
 import { RegisterUser } from '../interfaces/register-user.interface';
 import { environment } from '../../../environments/environments';
+import { UserPerson } from '../interfaces/user-person.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -90,5 +91,17 @@ export class AuthService {
     localStorage.removeItem('token');
     this._currentUser.set( null );
     this._authStatus.set( AuthStatus.notAuthenticated );
+  }
+
+  userPerson(userId: number):Observable<UserPerson> {
+    const url = `${this.baseUrl}/api/v1/users/${userId}`
+
+    return this.http.get<UserPerson>( url)
+      .pipe(
+        map( (response: UserPerson) => {return response}),
+        catchError( err => {
+          return throwError( () => {});
+        })
+      );
   }
 }

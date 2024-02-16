@@ -7,4 +7,5 @@ export interface User {
   name:                  null;
   nickname:              null;
   image:                 null;
+  role?:                  string;
 }
