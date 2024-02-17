@@ -2,10 +2,11 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, inject } from 
 import { Map} from 'mapbox-gl';
 import { MapService } from '../../services/map.service';
 import mapboxgl from 'mapbox-gl';
-import { Order } from '../../interfaces/order_interface';
+import { ClothingInventoryType, Order } from '../../interfaces/order_interface';
 import { OrdersServices } from '../../admin/services/order.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-order-customer',
@@ -13,6 +14,7 @@ import { Observable, map } from 'rxjs';
 })
 export class OrderCustomerComponent implements OnInit, AfterViewInit {
   private mapService = inject(MapService);
+  private fb = inject( FormBuilder );
 
   @ViewChild('map') divMap?: ElementRef;
   public map?: Map;
@@ -21,6 +23,8 @@ export class OrderCustomerComponent implements OnInit, AfterViewInit {
   public order?: Order;
   private orderService = inject(OrdersServices);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  public clothing_types?: ClothingInventoryType[];
 
   ngOnInit(): void {
     this.orderId = this.route.snapshot.params['id'];
@@ -28,7 +32,16 @@ export class OrderCustomerComponent implements OnInit, AfterViewInit {
       this.mapService.createMarkersFromOrder(this.order!);
       this.getDirections();
     });
+    this.orderService.clothingTypes().subscribe(data => this.clothing_types = data)
   }
+  public myFormInventory: FormGroup = this.fb.group({
+    quantity: [0, [ Validators.required ]],
+    clothing_type_id: [0, [ Validators.required ]],
+  });
+
+  public myFormPayment: FormGroup = this.fb.group({
+    amount: ['', [ Validators.required ]],
+  });
 
   load(): Observable<null> {
     return this.orderService.showOrder(this.orderId!).pipe(
@@ -68,5 +81,31 @@ export class OrderCustomerComponent implements OnInit, AfterViewInit {
     }
 
     this.mapService.getRouteBetweenPoints([start_longitude, start_latitude], [end_longitude, end_latitude]);
+  }
+
+  createInventory(orderId: number){
+    const { quantity, clothing_type_id } = this.myFormInventory.value;
+
+    this.orderService.addInventory(orderId, quantity, clothing_type_id)
+      .subscribe({
+        next: () => {
+          this.load().subscribe(()=> { })
+        },
+        error: ( ) => {}
+      }
+    )
+  }
+
+  createPayment(orderId: number){
+    const { amount } = this.myFormPayment.value;
+    console.log(amount)
+    this.orderService.addPayment(orderId, amount)
+      .subscribe({
+        next: () => {
+          this.load().subscribe(()=> { })
+        },
+        error: ( ) => {}
+      }
+    )
   }
 }

@@ -1,28 +1,95 @@
 <div class="row">
   <div class="col-12">
-      <div class="card">
-        <div class="row">
-          <form class="form-horizontal" [formGroup]="myForm">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Generar una orden</h4>
+        <form class="form-horizontal" [formGroup]="myForm">
+          <div class="row">
             <div class="col-6">
               <div class="form-group">
-                <label class="col-md-12">Selecciona la marca</label>
+                <label class="col-md-12"
+                  >Selecciona la dirección para recoger la orden.</label
+                >
                 <div class="col-md-12">
-                  <select class="form-control" formControlName="pickup_address_id" (change)="chargeAddress(myForm.get('pickup_address_id')!.value)">
-                    <option value="" disabled selected>Selecciona la dirección</option>
+                  <select
+                    class="form-control"
+                    formControlName="pickup_address_id"
+                    (change)="
+                      pickupAddress(myForm.get('pickup_address_id')!.value)
+                    "
+                  >
+                    <option value="" disabled selected>
+                      Selecciona la dirección
+                    </option>
                     @for (address of myAddress; track $index) {
-                      <option [value]="address.id">{{ address.address }}</option>
+                    <option [value]="address.id">{{ address.address }}</option>
                     }
                   </select>
                 </div>
               </div>
             </div>
-          </form>
-          <div class="col-6">
-            @if(addressSelected){
-              <map-mini-map [lngLat]="[addressSelected.longitude, addressSelected.latitude]" />
+            @if (pickupSelectedBD) {
+              <div class="col-6">
+                <map-mini-map [lngLat]="[pickupSelectedBD.longitude, pickupSelectedBD.latitude]"/>
+              </div>
+            }@else {
+              <div class="col-6" >
+                <map-mini-map [lngLat]="[pickupSelected.longitude, pickupSelected.latitude]"/>
+              </div>
             }
           </div>
-        </div>
+          <div class="row m-t-30">
+            <div class="col-6">
+              <div class="form-group">
+                <label class="col-md-12"
+                  >Selecciona la dirección para entregar la orden.</label
+                >
+                <div class="col-md-12">
+                  <select
+                    class="form-control"
+                    formControlName="delivery_address_id"
+                    (change)="
+                      deliveryAddress(
+                        myForm.get('delivery_address_id')!.value
+                      )
+                    "
+                  >
+                    <option value="" disabled selected>
+                      Selecciona la dirección
+                    </option>
+                    @for (address of myAddress; track $index) {
+                    <option [value]="address.id">
+                      {{ address.address }}
+                    </option>
+                    }
+                  </select>
+                </div>
+              </div>
+            </div>
+            @if (deliverySelectedBD) {
+              <div class="col-6">
+                <map-mini-map [lngLat]="[deliverySelectedBD.longitude, deliverySelectedBD.latitude]"/>
+              </div>
+            }@else {
+              <div class="col-6" >
+                <map-mini-map [lngLat]="[deliverySelected.longitude, deliverySelected.latitude]"/>
+              </div>
+            }
+          </div>
+          <div class="row m-t-30">
+            <label class="col-md-12">Nota</label>
+            <div class="col-md-12">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Dirección"
+                formControlName="notes"
+              />
+            </div>
+          </div>
+        </form>
+        <button type="button" class="btn waves-effect waves-light btn-info float-right ml-auto m-t-30" (click)="createOrder()">Crear Orden</button>
       </div>
+    </div>
   </div>
 </div>

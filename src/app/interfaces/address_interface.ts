@@ -6,6 +6,6 @@ export interface Address {
   latitude:    number;
   longitude:   number;
   customer_id: number;
-  created_at:  string;
-  updated_at:  string;
+  created_at?:  string;
+  updated_at?:  string;
 }
