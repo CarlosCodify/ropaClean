@@ -49,17 +49,16 @@ export class OrdersServices {
       )
   }
 
-  // registerUser( first_name:string, last_name:string, phone:string, email:EmailValidator, password:string, password_confirmation:string):Observable<boolean> {
-  //   const url = `${this.baseUrl}/api/v1/users/register`
-  //   const user_body = { email, password, password_confirmation}
-  //   const person_body = { first_name, last_name, phone, email}
+  createOrder(pickup_address_id:number, delivery_addres_id:number, notes:string):Observable<boolean> {
+    const url = `${this.baseUrl}/api/v1/orders`
+    const order_body = { pickup_address_id, delivery_addres_id, notes}
 
-  //   return this.http.post<RegisterUser>(url, {user: user_body, person: person_body}, { observe: 'response' })
-  //     .pipe(
-  //       map( (response) => this.setAuthentication(response)),
-  //       catchError( err => {
-  //         return throwError( () => err.error.errors.full_messages[0]);
-  //       })
-  //     )
-  // }
+    return this.http.post(url, {order: order_body}, { observe: 'response' })
+      .pipe(
+        map( (__) => true),
+        catchError( err => {
+          return throwError( () => err.error.errors.full_messages[0]);
+        })
+      )
+  }
 }

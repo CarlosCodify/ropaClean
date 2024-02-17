@@ -4,13 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
 import { OrderViewComponent } from './order-view/order-view.component';
 import { MiniMapComponent } from './mini-map/mini-map.component';
+import { OrderCustomerComponent } from './order-customer/order-customer.component';
 
 
 
 @NgModule({
   declarations: [
     OrderViewComponent,
-    MiniMapComponent
+    MiniMapComponent,
+    OrderCustomerComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { MiniMapComponent } from './mini-map/mini-map.component';
   ],
   exports: [
     OrderViewComponent,
-    MiniMapComponent
+    MiniMapComponent,
+    OrderCustomerComponent
   ]
 })
 export class ComponentsModule { }

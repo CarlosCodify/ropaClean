@@ -11,6 +11,7 @@ import { MotorcyclesComponent } from '../admin/motorcycles/motorcycles.component
 import { OrderListsComponent } from '../admin/order-lists/order-lists.component';
 import { OrderViewComponent } from '../components/order-view/order-view.component';
 import { MyAddressComponent } from '../customer/my-address/my-address.component';
+import { OrderCustomerComponent } from '../components/order-customer/order-customer.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'customers/orders', component: OrdersComponent },
       { path: 'customers/order/new', component: OrderNewComponent },
       { path: 'customers/my-address', component: MyAddressComponent },
+      { path: 'customers/order/:id', component: OrderCustomerComponent },
       // Driver
       { path: 'drivers/orders', component: MyOrdersComponent },
       { path: 'drivers/new-orders', component: NewOrdersComponent },

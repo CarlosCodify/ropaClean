@@ -1,1 +1,28 @@
-<p>order-new works!</p>
+<div class="row">
+  <div class="col-12">
+      <div class="card">
+        <div class="row">
+          <form class="form-horizontal" [formGroup]="myForm">
+            <div class="col-6">
+              <div class="form-group">
+                <label class="col-md-12">Selecciona la marca</label>
+                <div class="col-md-12">
+                  <select class="form-control" formControlName="pickup_address_id" (change)="chargeAddress(myForm.get('pickup_address_id')!.value)">
+                    <option value="" disabled selected>Selecciona la dirección</option>
+                    @for (address of myAddress; track $index) {
+                      <option [value]="address.id">{{ address.address }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="col-6">
+            @if(addressSelected){
+              <map-mini-map [lngLat]="[addressSelected.longitude, addressSelected.latitude]" />
+            }
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

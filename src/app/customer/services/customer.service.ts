@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environments';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { Address } from '../../interfaces/address_interface';
+import { Order } from '../../interfaces/order_interface';
 
 
 @Injectable({
@@ -31,6 +32,22 @@ export class CustomerServices {
       )
   }
 
+  address(addresId:number):Observable<Address>{
+    const url = `${this.baseUrl}/api/v1/customers/address_show`
+    const  params = { id: addresId}
+    return this.http.post<Address>(url, params)
+      .pipe(
+        map( (address: Address) => {
+            address.latitude = Number(address.latitude);
+            address.longitude = Number(address.longitude);
+          return address;
+        } ),
+        catchError( err => {
+          return throwError( () => {} );
+        })
+      )
+  }
+
   createAddress(customerId:number, address:string, latitude:string, longitude:string):Observable<boolean>{
     const url = `${this.baseUrl}/api/v1/customers/${customerId}/add_address`
     const address_body = { latitude, longitude, address}
@@ -42,5 +59,17 @@ export class CustomerServices {
           return throwError( () => err);
         })
       );
+  }
+
+  orderList(customerId:number):Observable<Order[]>{
+    const url = `${this.baseUrl}/api/v1/customers/${customerId}/order_list`
+
+    return this.http.get<Order[]>(url)
+      .pipe(
+        map( (response: Order[]) => { return response } ),
+        catchError( err => {
+          return throwError( () => {} );
+        })
+      )
   }
 }
