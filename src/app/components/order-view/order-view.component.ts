@@ -55,7 +55,6 @@ export class OrderViewComponent implements OnInit, AfterViewInit{
   }
 
   getDirections() {
-    console.log('Hola')
     if ( !this.order ) return;
     const start_longitude = Number(this.order.driver.longitude);
     const start_latitude = Number(this.order.driver.latitude);

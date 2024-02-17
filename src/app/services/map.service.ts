@@ -106,7 +106,6 @@ export class MapService {
   }
 
   private drawPolyline( route: Route){
-    console.log(route)
     const coords = route.geometry.coordinates;
 
     // Polyline

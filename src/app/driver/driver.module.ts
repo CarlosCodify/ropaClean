@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { NewOrdersComponent } from './new-orders/new-orders.component';
+import { ComponentsModule } from '../components/components.module';
 
 
 
@@ -11,7 +12,8 @@ import { NewOrdersComponent } from './new-orders/new-orders.component';
     NewOrdersComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ComponentsModule
   ],
   exports:[
     MyOrdersComponent,

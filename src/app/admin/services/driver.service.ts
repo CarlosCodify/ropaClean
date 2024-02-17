@@ -7,6 +7,7 @@ import { EmailValidator } from '@angular/forms';
 import { RegisterDriver } from '../drivers/interfaces/register-driver.interface';
 import { Motorcycle } from '../motorcycles/interfaces/motorcycle.interface';
 import { Resume } from '../../interfaces/resume_interface';
+import { Order } from '../../interfaces/order_interface';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,30 @@ export class DriverServices {
     return this.http.get<Resume>(url)
       .pipe(
         map( (response: Resume) => { return response} ),
+        catchError( err => {
+          return throwError( () => {} );
+        })
+      )
+  }
+
+  currentOrder(driverId: number):Observable<Order>{
+    const url = `${this.baseUrl}/api/v1/drivers/${driverId}/order`
+
+    return this.http.get<Order>(url)
+      .pipe(
+        map( (response: Order) => { return response} ),
+        catchError( err => {
+          return throwError( () => {} );
+        })
+      )
+  }
+
+  orderList(driverId: number):Observable<Order[]>{
+    const url = `${this.baseUrl}/api/v1/drivers/${driverId}/order_list`
+
+    return this.http.get<Order[]>(url)
+      .pipe(
+        map( (response: Order[]) => { return response} ),
         catchError( err => {
           return throwError( () => {} );
         })

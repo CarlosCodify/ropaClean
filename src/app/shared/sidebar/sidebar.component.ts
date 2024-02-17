@@ -28,31 +28,40 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.load().subscribe(() => {
-      console.log(this.userPerson);
       if (!this.userPerson) return;
       if (this.userPerson!.person.role === 'customer') {
         this.menuItems = [
           {
             label: 'Mis ordenes',
-            icon: 'pi pi-fw pi-home',
+            icon: 'fa fa-list',
             routerLink: 'customers/orders'
           },
           {
             label: 'Nueva orden',
-            icon: 'pi pi-fw pi-home',
+            icon: 'fa fa-plus',
             routerLink: 'customers/order/new'
+          },
+          {
+            label: 'Mis direcciones',
+            icon: 'fa fa-location-arrow',
+            routerLink: 'customers/my-address'
           },
         ];
       } else if (this.userPerson!.person.role === 'driver') {
         this.menuItems = [
           {
-            label: 'Mis ordenes',
-            icon: 'pi pi-fw pi-home',
+            label: 'Dashboard',
+            icon: 'mdi mdi-gauge',
+            routerLink: 'home'
+          },
+          {
+            label: 'Orden actual',
+            icon: 'fa fa-motorcycle',
             routerLink: 'drivers/orders'
           },
           {
-            label: 'Nueva orden',
-            icon: 'pi pi-fw pi-home',
+            label: 'Mis ordenes',
+            icon: 'fa fa-list',
             routerLink: 'drivers/new-orders'
           },
         ];

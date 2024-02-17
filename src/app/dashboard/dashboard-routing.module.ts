@@ -10,6 +10,7 @@ import { DriversComponent } from '../admin/drivers/drivers.component';
 import { MotorcyclesComponent } from '../admin/motorcycles/motorcycles.component';
 import { OrderListsComponent } from '../admin/order-lists/order-lists.component';
 import { OrderViewComponent } from '../components/order-view/order-view.component';
+import { MyAddressComponent } from '../customer/my-address/my-address.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       // Customer
       { path: 'customers/orders', component: OrdersComponent },
       { path: 'customers/order/new', component: OrderNewComponent },
+      { path: 'customers/my-address', component: MyAddressComponent },
       // Driver
       { path: 'drivers/orders', component: MyOrdersComponent },
       { path: 'drivers/new-orders', component: NewOrdersComponent },
