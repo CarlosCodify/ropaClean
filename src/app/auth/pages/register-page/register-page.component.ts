@@ -38,7 +38,15 @@ export class RegisterPageComponent {
 
     this.authService.registerUser( first_name, last_name, phone, email, password, passwordConfirmation)
       .subscribe( {
-        next: () => this.router.navigateByUrl('/dashboard'),
+        next: () => {
+          this.authService.login( email, password )
+            .subscribe( {
+              next: () => this.router.navigateByUrl('/dashboard'),
+              error: ( message ) => {
+                Swal.fire('Error', message, 'error')
+              }
+            })
+        },
         error: ( message ) => {
           Swal.fire('Error', message, 'error')
         }

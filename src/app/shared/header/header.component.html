@@ -34,15 +34,15 @@
                               <div class="dw-user-box">
                                   <div class="u-img"><img src="./assets/images/users/1.jpg" alt="user"></div>
                                   <div class="u-text">
-                                      <h4>Steave Jobs</h4>
-                                      <p class="text-muted">{{ 'varun@gmail.com' }}</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfil</a></div>
+                                      <h4>{{ userPerson?.person?.first_name + ' ' + userPerson?.person?.last_name }}</h4>
+                                      <p class="text-muted">{{ userPerson?.email }}</p><a class="btn btn-rounded btn-danger btn-sm">Ver Perfil</a></div>
                               </div>
                           </li>
                           <li role="separator" class="divider"></li>
-                          <li><a href="#"><i class="ti-user"></i> Mi Perfil</a></li>
+                          <!-- <li><a href="#"><i class="ti-user"></i> Mi Perfil</a></li>
                           <li><a href="#"><i class="ti-wallet"></i> Mis Pagos</a></li>
                           <li role="separator" class="divider"></li>
-                          <li><a href="#"><i class="ti-settings"></i>Editar Perfil</a></li>
+                          <li><a href="#"><i class="ti-settings"></i>Editar Perfil</a></li> -->
                           <li role="separator" class="divider"></li>
                           <li><a (click)="onLogout()"><i class="fa fa-power-off"></i> Cerrar sesión</a></li>
                       </ul>
