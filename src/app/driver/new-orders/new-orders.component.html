@@ -29,6 +29,21 @@
                                 @case ('Pendiente') {
                                   <div class="label label-table label-warning">En proceso</div>
                                 }
+                                @case ('Pendiente') {
+                                  <div class="label label-table label-warning">En proceso</div>
+                                }
+                                @case ('En camino a recoger la orden.') {
+                                  <div class="label label-table label-warning">En camino a recoger la orden.</div>
+                                }
+                                @case ('En camino a la lavanderia.') {
+                                  <div class="label label-table label-warning">En camino a la lavanderia.</div>
+                                }
+                                @case ('Entregado a la lavanderia.') {
+                                  <div class="label label-table label-warning">Entregado a la lavanderia.</div>
+                                }
+                                @case ('En camino a dejar la orden.') {
+                                  <div class="label label-table label-warning">En camino a dejar la orden.</div>
+                                }
                                 @default {
                                   <div class="label label-table label-success">Terminado</div>
                                 }
